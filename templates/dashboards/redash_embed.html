@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <iframe 
+        width="1080" height="640"
+        class="dashboard-container"
+        src="{{ embed_url }}"
+        frameborder="0"
+        allowFullScreen="true">
+    </iframe>
+{% endblock %}

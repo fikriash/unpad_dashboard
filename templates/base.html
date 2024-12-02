@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #004085;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #0069d9;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.active {
+            background-color: #004085;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        nav span {
+            float: right;
+            margin-right: 20px;
+            color: white;
+        }
+        nav .user-info {
+            float: right;
+            margin-left: auto;
+            padding-right: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        .dashboard-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            gap: 20px;
+        }
+        .dashboard-card {
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 15px;
+            background: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .dashboard-card h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .dashboard-card a {
+            text-decoration: none;
+            color: #0069d9;
+            font-weight: bold;
+        }
+        .dashboard-card a:hover {
+            text-decoration: underline;
+        }
+        .statistics {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .statistic-card {
+            width: 200px;
+            background: #004085;
+            color: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: #f1f1f1;
+            color: #333;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dashboard Universitas Padjadjaran</h1>
+    </header>
+    <nav>
+        {% if user.is_authenticated %}
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">Beranda</a>
+            <a href="/dashboard/powerbi/faculty/" class="{% if request.path == '/dashboard/powerbi/faculty/' %}active{% endif %}">Dashboard Fakultas</a>
+            <a href="/dashboard/powerbi/iku/" class="{% if request.path == '/dashboard/powerbi/iku/' %}active{% endif %}">Dashboard IKU</a>
+            <a href="/dashboard/powerbi/uad/" class="{% if request.path == '/dashboard/powerbi/uad/' %}active{% endif %}">Dashboard UAD</a>
+            <a href="/dashboard/raw-data/" class="{% if request.path == '/dashboard/raw-data/' %}active{% endif %}">Raw Data</a>
+            <a href="/accounts/logout/">Logout</a>
+            <span>Halo, {{ user.username }}!</span>
+        {% else %}
+            <a href="/accounts/login/" class="{% if request.path == '/accounts/login/' %}active{% endif %}">Login</a>
+        {% endif %}
+    </nav>
+    
+    <main>
+        {% block content %}
+        <h2>Selamat Datang di Dashboard Universitas Padjadjaran</h2>
+        <p>Gunakan menu navigasi di atas untuk mengakses data dan dashboard.</p>
+        
+        <!-- Statistik -->
+        <div class="statistics">
+            <div class="statistic-card">
+                <h3>Total Pengguna</h3>
+                <p>120</p>
+            </div>
+            <div class="statistic-card">
+                <h3>Data Terunduh</h3>
+                <p>250</p>
+            </div>
+            <div class="statistic-card">
+                <h3>Dashboard Aktif</h3>
+                <p>5</p>
+            </div>
+        </div>
+        
+        <!-- Kartu Dashboard -->
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <h3>Dashboard Fakultas</h3>
+                <a href="/dashboard/powerbi/faculty/">Lihat Dashboard</a>
+            </div>
+            <div class="dashboard-card">
+                <h3>Dashboard IKU</h3>
+                <a href="/dashboard/powerbi/iku/">Lihat Dashboard</a>
+            </div>
+            <div class="dashboard-card">
+                <h3>Dashboard UAD</h3>
+                <a href="/dashboard/powerbi/uad/">Lihat Dashboard</a>
+            </div>
+        </div>
+        
+        {% endblock %}
+    </main>
+    <footer>
+        &copy; 2024 Universitas Padjadjaran. All Rights Reserved.
+    </footer>
+</body>
+</html>
